@@ -1,18 +1,29 @@
 import video from "../data/video.js";
+import React, {useState} from "react";
+import Videoinfo from "./Videoinfo.js";
+import Vote from "./Vote.js";
+import Comments from "./Comments.js";
 
 function App() {
-  console.log("Here's your data:", video);
+  const [videoData, setVideoData] = useState(video);
+  const [upVote, setUpVote] = useState(video.upvotes)
+  const [downVote, setDownVote] = useState(video.downvotes);
+
+
+  const onIncreaseVote = () => {
+    setUpVote((vote) => vote + 1)
+  }
+
+  const onDecreaseVote = () => {
+    setDownVote((vote) => vote + 1)
+  }
+
 
   return (
     <div className="App">
-      <iframe
-        width="919"
-        height="525"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        frameBorder="0"
-        allowFullScreen
-        title="Thinking in React"
-      />
+      <Videoinfo {...videoData} />
+      <Vote upvote={upVote} downvote={downVote} increaseVote={onIncreaseVote} decreaseVote={onDecreaseVote}/>
+      <Comments {...videoData}/>
     </div>
   );
 }
